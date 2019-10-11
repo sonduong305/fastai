@@ -395,9 +395,11 @@ def open_image(fn:PathOrStr, div:bool=True, convert_mode:str='RGB', cls:type=Ima
     "Return `Image` object created from image in file `fn`."
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", UserWarning) # EXIF warning from TiffPlugin
-        x = PIL.Image.open(fn).convert(convert_mode)
+#         x = PIL.Image.open(fn).convert(convert_mode)
+        x = np.load(fn)
     if after_open: x = after_open(x)
-    x = pil2tensor(x,np.float32)
+#     x = pil2tensor(x,np.float32)
+    x = torch.from_numpy(x)
     if div: x.div_(255)
     return cls(x)
 
