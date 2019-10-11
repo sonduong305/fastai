@@ -397,6 +397,7 @@ def open_image(fn:PathOrStr, div:bool=True, convert_mode:str='RGB', cls:type=Ima
         warnings.simplefilter("ignore", UserWarning) # EXIF warning from TiffPlugin
 #         x = PIL.Image.open(fn).convert(convert_mode)
         x = np.load(fn)
+        x = np.stack((x, x), axis = 2)
     if after_open: x = after_open(x)
 #     x = pil2tensor(x,np.float32)
     x = torch.from_numpy(x)
